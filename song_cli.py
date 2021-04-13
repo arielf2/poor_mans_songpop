@@ -10,7 +10,7 @@ from sounddevice import play
 
 import warnings
 warnings.filterwarnings("ignore")
-cli = False
+
 
 def file_has_title_ID(song_path: str) -> bool:
    try:
@@ -42,9 +42,8 @@ def get_song_duration(song: str):
 def pre_game(folder: str):
    song_paths_list = collect_mp3_paths(folder)
    song_paths_list = remove_invalid_ID3_songs(song_paths_list)
-   #return song_paths_list
    print("hello")
-   main_game(song_paths_list, 3)
+   #main_game(song_paths_list, 3)
 
 def print_round(current_round: int):
    round_string = f"Round {current_round + 1}"
@@ -80,28 +79,27 @@ def main_game(song_list: list, snippet_duration: int):
       play(chosen_song, sr, blocking=True)
 
       # User menu
-      if (cli):
-          choice = "-1"
-          while (choice not in "12345"):
-             for idx, title in enumerate(song_names):
-                print(f"{idx + 1}. {title}")
-             choice = input("What song is playing? (Or - press 5 to finish)\n")
+      choice = "-1"
+      while (choice not in "12345"):
+         for idx, title in enumerate(song_names):
+            print(f"{idx + 1}. {title}")
+         choice = input("What song is playing? (Or - press 5 to finish)\n")
 
-          if (int(choice) == 5):
-             game = False
-          elif (int(choice) in [1, 2, 3, 4]):
-                turns += 1
-                if (song_names[int(choice) - 1] == chosen_song_name):
-                   print("You won!")
-                   wins += 1
+      if (int(choice) == 5):
+         game = False
+      elif (int(choice) in [1, 2, 3, 4]):
+            turns += 1
+            if (song_names[int(choice) - 1] == chosen_song_name):
+               print("You won!")
+               wins += 1
 
-                else:
-                   print("You lost!")
+            else:
+               print("You lost!")
 
 
-          if (game == False):
-             ratio = wins / turns
-             print(f"Final score = {wins}/{turns} -> {100*ratio}%")
+      if (game == False):
+         ratio = wins / turns
+         print(f"Final score = {wins}/{turns} -> {100*ratio}%")
 
 m_folder = r"C:\Users\Ariel\Desktop\RAZ\music"
 #m_folder = r"C:\Users\Ariel\Downloads\Soulseek Downloads"
